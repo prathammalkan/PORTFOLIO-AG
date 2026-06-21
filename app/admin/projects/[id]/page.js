@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
-import s from '../../../admin.module.css';
+import s from '../../admin.module.css';
 
 function TagInput({ tags, onChange }) {
   const [input, setInput] = useState('');
