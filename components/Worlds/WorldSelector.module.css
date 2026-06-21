@@ -1,0 +1,152 @@
+.section {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: var(--space-2xl) var(--space-xl);
+  max-width: 1400px;
+  margin: 0 auto;
+}
+.sectionTitle {
+  text-align: center;
+  font-size: var(--text-micro);
+  text-transform: uppercase;
+  letter-spacing: 0.4em;
+  color: var(--light-tertiary);
+  margin-bottom: var(--space-xl);
+  opacity: 0;
+}
+.panels {
+  display: flex;
+  gap: 0.6rem;
+  height: 65vh;
+  min-height: 450px;
+}
+.panel {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: flex 0.7s var(--ease-out-expo);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: var(--space-xl);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  opacity: 0;
+}
+.panel:hover, .panelActive {
+  flex: 2.8;
+}
+.panelBg {
+  position: absolute;
+  inset: 0;
+  opacity: 0.06;
+  transition: opacity 0.5s ease;
+}
+.panel:hover .panelBg { opacity: 0.12; }
+
+/* World-specific backgrounds */
+.code .panelBg { background: linear-gradient(180deg, var(--code-primary), transparent 70%); }
+.cinema .panelBg { background: linear-gradient(180deg, var(--cinema-primary), transparent 70%); }
+.canvas .panelBg { background: linear-gradient(180deg, var(--canvas-primary), transparent 70%); }
+.about .panelBg { background: linear-gradient(180deg, var(--about-primary), transparent 70%); }
+
+.code { border-color: hsla(210, 100%, 60%, 0.1); }
+.cinema { border-color: hsla(8, 85%, 58%, 0.1); }
+.canvas { border-color: hsla(45, 95%, 58%, 0.1); }
+.about { border-color: hsla(160, 70%, 50%, 0.1); }
+
+.code:hover { border-color: hsla(210, 100%, 60%, 0.25); }
+.cinema:hover { border-color: hsla(8, 85%, 58%, 0.25); }
+.canvas:hover { border-color: hsla(45, 95%, 58%, 0.25); }
+.about:hover { border-color: hsla(160, 70%, 50%, 0.25); }
+
+.panelNumber {
+  position: absolute;
+  top: var(--space-lg);
+  left: var(--space-lg);
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  color: var(--light-tertiary);
+  opacity: 0.4;
+}
+.panelContent {
+  position: relative;
+  z-index: 1;
+}
+.worldTitle {
+  font-size: var(--text-heading);
+  font-weight: 700;
+  font-family: var(--font-primary);
+  margin-bottom: var(--space-xs);
+  transition: font-size 0.5s var(--ease-out-expo);
+}
+.panel:hover .worldTitle { font-size: var(--text-display); }
+
+.code .worldTitle { color: var(--code-primary); }
+.cinema .worldTitle { color: var(--cinema-primary); }
+.canvas .worldTitle { color: var(--canvas-primary); }
+.about .worldTitle { color: var(--about-primary); }
+
+.worldSubtitle {
+  font-size: var(--text-small);
+  color: var(--light-secondary);
+  margin-bottom: var(--space-sm);
+}
+.worldDesc {
+  font-size: var(--text-small);
+  color: var(--light-tertiary);
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: all 0.5s var(--ease-out-expo);
+  line-height: 1.6;
+}
+.panel:hover .worldDesc {
+  max-height: 80px;
+  opacity: 1;
+  margin-bottom: var(--space-md);
+}
+.worldStat {
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  color: var(--light-tertiary);
+  letter-spacing: 0.1em;
+  margin-top: var(--space-sm);
+}
+.enterLink {
+  font-size: var(--text-small);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.4s var(--ease-out-expo);
+  display: inline-block;
+  margin-top: var(--space-md);
+}
+.panel:hover .enterLink {
+  opacity: 1;
+  transform: translateY(0);
+}
+.code .enterLink { color: var(--code-primary); }
+.cinema .enterLink { color: var(--cinema-primary); }
+.canvas .enterLink { color: var(--canvas-primary); }
+.about .enterLink { color: var(--about-primary); }
+
+@media (max-width: 900px) {
+  .panels {
+    flex-direction: column;
+    height: auto;
+    gap: var(--space-md);
+  }
+  .panel {
+    min-height: 160px;
+    flex: none !important;
+  }
+  .panel:hover { flex: none !important; }
+  .worldDesc { max-height: 80px; opacity: 0.7; }
+  .enterLink { opacity: 0.7; transform: translateY(0); }
+  .panel:hover .worldTitle { font-size: var(--text-heading); }
+}

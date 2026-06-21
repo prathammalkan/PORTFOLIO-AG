@@ -1,66 +1,77 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+'use client';
+import { useState, useEffect } from 'react';
+import dynamic from 'next/dynamic';
+
+const ArrivalCanvas = dynamic(() => import('@/components/Arrival/ArrivalCanvas'), { ssr: false });
+const CustomCursor = dynamic(() => import('@/components/Cursor/CustomCursor'), { ssr: false });
+import PrismHero from '@/components/Hero/PrismHero';
+import TrustLayer from '@/components/Trust/TrustLayer';
+import WorldSelector from '@/components/Worlds/WorldSelector';
+import WorldCode from '@/components/Worlds/WorldCode';
+import WorldCinema from '@/components/Worlds/WorldCinema';
+import WorldCanvas from '@/components/Worlds/WorldCanvas';
+import WorldAbout from '@/components/Worlds/WorldAbout';
+import Testimonials from '@/components/Testimonials/Testimonials';
+import PrismProcess from '@/components/Process/PrismProcess';
+import ContactForm from '@/components/Contact/ContactForm';
+import Navigation from '@/components/Navigation/Navigation';
 
 export default function Home() {
+  const [mounted, setMounted] = useState(false);
+  const [arrivalDone, setArrivalDone] = useState(false);
+  const [skipArrival, setSkipArrival] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+    const visited = localStorage.getItem('prism-visited');
+    if (visited) {
+      setSkipArrival(true);
+      setArrivalDone(true);
+    }
+
+    // Initialize Lenis smooth scroll
+    let lenis;
+    import('lenis').then((mod) => {
+      const Lenis = mod.default;
+      lenis = new Lenis({
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        smoothWheel: true,
+      });
+      function raf(time) {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+      }
+      requestAnimationFrame(raf);
+    });
+
+    return () => {
+      if (lenis) lenis.destroy();
+    };
+  }, []);
+
+  const handleArrivalComplete = () => {
+    setArrivalDone(true);
+    localStorage.setItem('prism-visited', 'true');
+  };
+
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className={styles.intro}>
-          <h1>To get started, edit the page.js file.</h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+    <>
+      {mounted && !skipArrival && <ArrivalCanvas onComplete={handleArrivalComplete} />}
+      <Navigation show={arrivalDone} />
+      {arrivalDone && <CustomCursor />}
+      <main>
+        <PrismHero visible={arrivalDone} />
+        <TrustLayer />
+        <WorldSelector />
+        <WorldCode />
+        <WorldCinema />
+        <WorldCanvas />
+        <WorldAbout />
+        <Testimonials />
+        <PrismProcess />
+        <ContactForm />
       </main>
-    </div>
+    </>
   );
 }

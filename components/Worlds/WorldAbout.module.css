@@ -1,0 +1,258 @@
+.section {
+  position: relative;
+  padding: var(--space-3xl) var(--space-xl);
+  max-width: 1200px;
+  margin: 0 auto;
+  min-height: 100vh;
+}
+.worldHero {
+  text-align: center;
+  padding: var(--space-2xl) 0;
+  margin-bottom: var(--space-2xl);
+}
+.heroTitle {
+  font-family: var(--font-editorial);
+  font-size: var(--text-display);
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--about-primary), var(--about-glow));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: var(--space-md);
+  opacity: 0;
+}
+.heroSubtitle {
+  font-family: var(--font-editorial);
+  font-style: italic;
+  font-size: var(--text-body);
+  color: var(--light-secondary);
+}
+.sectionLabel {
+  font-size: var(--text-micro);
+  color: var(--light-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  text-align: center;
+  margin-bottom: var(--space-xl);
+}
+.storySection {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: var(--space-2xl);
+  margin-bottom: var(--space-3xl);
+  align-items: center;
+}
+.storyParagraph {
+  font-size: var(--text-body);
+  color: var(--light-secondary);
+  line-height: 1.9;
+  margin-bottom: var(--space-lg);
+  opacity: 0;
+}
+.storyParagraph em {
+  color: var(--about-primary);
+  font-style: normal;
+  font-weight: 500;
+}
+.photoContainer {
+  width: 100%;
+  aspect-ratio: 3/4;
+  border: 1px solid hsla(160, 70%, 50%, 0.15);
+  border-radius: var(--radius-xl);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-sm);
+  padding-bottom: var(--space-lg);
+  overflow: hidden;
+  position: relative;
+  background: linear-gradient(135deg, hsla(160, 70%, 50%, 0.05), hsla(170, 80%, 45%, 0.02));
+}
+.photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--radius-xl);
+}
+.photoLabel {
+  font-size: var(--text-small);
+  color: var(--light-secondary);
+}
+.photoLocation {
+  font-size: var(--text-micro);
+  color: var(--light-tertiary);
+}
+.philosophySection { margin-bottom: var(--space-3xl); }
+.philosophyGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-lg);
+}
+.philCard {
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl);
+  opacity: 0;
+  transition: all 0.4s var(--ease-out-expo);
+}
+.philCard:hover {
+  border-color: hsla(160, 70%, 50%, 0.2);
+  transform: translateY(-4px);
+}
+.philNumber {
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  color: var(--about-primary);
+  opacity: 0.5;
+}
+.philTitle {
+  font-family: var(--font-editorial);
+  font-size: var(--text-subheading);
+  font-style: italic;
+  color: var(--light-primary);
+  margin: var(--space-sm) 0;
+  line-height: 1.4;
+}
+.philDesc {
+  font-size: var(--text-small);
+  color: var(--light-tertiary);
+  line-height: 1.7;
+}
+.journeySection { margin-bottom: var(--space-3xl); }
+.journeyTimeline {
+  position: relative;
+  padding-left: var(--space-xl);
+  max-width: 700px;
+  margin: 0 auto;
+}
+.journeyTimeline::before {
+  content: '';
+  position: absolute;
+  left: 6px;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--void-border);
+}
+.journeyItem {
+  position: relative;
+  padding-bottom: var(--space-xl);
+  padding-left: var(--space-lg);
+  opacity: 0;
+}
+.journeyDot {
+  position: absolute;
+  left: calc(-1 * var(--space-xl) + 1px);
+  top: 4px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid var(--void-black);
+}
+.journeyYear {
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  letter-spacing: 0.1em;
+  margin-bottom: var(--space-xs);
+}
+.journeyTitle {
+  font-size: var(--text-subheading);
+  font-weight: 600;
+  color: var(--light-primary);
+  margin-bottom: var(--space-xs);
+}
+.journeyDesc {
+  font-size: var(--text-small);
+  color: var(--light-secondary);
+  line-height: 1.7;
+}
+.educationSection { margin-bottom: var(--space-3xl); }
+.eduCard {
+  text-align: center;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl);
+  max-width: 600px;
+  margin: 0 auto;
+}
+.eduDegree {
+  font-size: var(--text-subheading);
+  font-weight: 600;
+  color: var(--light-primary);
+  margin-bottom: var(--space-sm);
+}
+.eduInstitution {
+  font-size: var(--text-small);
+  color: var(--light-secondary);
+}
+.eduUniversity {
+  font-size: var(--text-micro);
+  color: var(--light-tertiary);
+  margin-top: var(--space-xs);
+}
+.interestsSection { margin-bottom: var(--space-2xl); }
+.interestTags {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+.interestTag {
+  font-size: var(--text-small);
+  color: var(--light-secondary);
+  padding: 0.5rem 1.2rem;
+  border: 1px solid var(--void-border);
+  border-radius: var(--radius-full);
+  transition: all 0.3s ease;
+}
+.interestTag:hover {
+  border-color: var(--about-primary);
+  color: var(--about-primary);
+  transform: translateY(-2px);
+}
+.socialsSection { margin-bottom: var(--space-xl); }
+.socialLinks {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-md);
+  flex-wrap: wrap;
+}
+.socialLink {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-md) var(--space-lg);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: var(--radius-md);
+  transition: all 0.3s ease;
+  min-width: 80px;
+}
+.socialLink:hover {
+  border-color: var(--about-primary);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px hsla(160, 70%, 50%, 0.08);
+}
+.socialIcon {
+  font-family: var(--font-mono);
+  font-size: var(--text-small);
+  font-weight: 700;
+  color: var(--about-primary);
+}
+.socialName {
+  font-size: var(--text-micro);
+  color: var(--light-tertiary);
+}
+
+@media (max-width: 768px) {
+  .section { padding: var(--space-2xl) var(--space-lg); }
+  .storySection { grid-template-columns: 1fr; }
+  .storyImage { order: -1; }
+  .photoContainer { aspect-ratio: 1; max-width: 250px; margin: 0 auto; }
+  .philosophyGrid { grid-template-columns: 1fr; }
+}

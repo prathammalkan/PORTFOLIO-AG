@@ -1,0 +1,41 @@
+.wrapper {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgb(8, 8, 14);
+  transition: opacity 0.8s ease-out;
+}
+.canvas {
+  width: 100%;
+  height: 100%;
+}
+.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+.skipButton {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 101;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.4);
+  padding: 0.5rem 1.5rem;
+  border-radius: 9999px;
+  cursor: pointer;
+  font-family: var(--font-primary);
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+  animation: fadeIn 0.5s ease;
+}
+.skipButton:hover {
+  border-color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.8);
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}

@@ -1,0 +1,142 @@
+.section {
+  position: relative;
+  padding: var(--space-3xl) var(--space-xl);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.topLine {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--code-primary), var(--cinema-primary), var(--canvas-primary), var(--about-primary), transparent);
+  opacity: 0.4;
+}
+.metricsRow {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-lg);
+  margin-bottom: var(--space-3xl);
+  text-align: center;
+}
+.metricItem { opacity: 0; }
+.metricValue {
+  font-size: var(--text-display);
+  font-weight: 700;
+  color: var(--light-primary);
+  line-height: 1;
+  margin-bottom: var(--space-sm);
+}
+.metricLabel {
+  font-size: var(--text-micro);
+  color: var(--light-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+}
+.servicesRow {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-lg);
+  margin-bottom: var(--space-3xl);
+}
+.serviceCard {
+  opacity: 0;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl);
+  transition: all 0.5s var(--ease-out-expo);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  position: relative;
+  overflow: hidden;
+}
+.serviceCard::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  border-radius: inherit;
+}
+.serviceCard:hover {
+  transform: translateY(-6px);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+.serviceCard:hover::before { opacity: 1; }
+
+/* World-specific card styles */
+.code:hover { border-color: hsla(210, 100%, 60%, 0.3); box-shadow: 0 8px 40px hsla(210, 100%, 60%, 0.08); }
+.code::before { background: radial-gradient(circle at 50% 0%, hsla(210, 100%, 60%, 0.08), transparent 70%); }
+.code .serviceIcon { color: var(--code-primary); }
+
+.cinema:hover { border-color: hsla(8, 85%, 58%, 0.3); box-shadow: 0 8px 40px hsla(8, 85%, 58%, 0.08); }
+.cinema::before { background: radial-gradient(circle at 50% 0%, hsla(8, 85%, 58%, 0.08), transparent 70%); }
+.cinema .serviceIcon { color: var(--cinema-primary); }
+
+.canvas:hover { border-color: hsla(45, 95%, 58%, 0.3); box-shadow: 0 8px 40px hsla(45, 95%, 58%, 0.08); }
+.canvas::before { background: radial-gradient(circle at 50% 0%, hsla(45, 95%, 58%, 0.08), transparent 70%); }
+.canvas .serviceIcon { color: var(--canvas-primary); }
+
+.about:hover { border-color: hsla(160, 70%, 50%, 0.3); box-shadow: 0 8px 40px hsla(160, 70%, 50%, 0.08); }
+.about::before { background: radial-gradient(circle at 50% 0%, hsla(160, 70%, 50%, 0.08), transparent 70%); }
+.about .serviceIcon { color: var(--about-primary); }
+
+.serviceIcon {
+  width: 32px;
+  height: 32px;
+  transition: transform 0.3s ease;
+}
+.serviceCard:hover .serviceIcon { transform: scale(1.1); }
+.serviceTitle {
+  font-size: var(--text-subheading);
+  font-weight: 600;
+  color: var(--light-primary);
+}
+.serviceDesc {
+  font-size: var(--text-small);
+  color: var(--light-secondary);
+  line-height: 1.7;
+  flex: 1;
+}
+.serviceLink {
+  font-size: var(--text-micro);
+  color: var(--light-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  transition: color 0.3s ease;
+}
+.serviceCard:hover .serviceLink { color: var(--light-primary); }
+
+.industriesRow {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+.industryTag {
+  font-size: var(--text-micro);
+  color: var(--light-tertiary);
+  padding: 0.4rem 1rem;
+  border: 1px solid var(--void-border);
+  border-radius: var(--radius-full);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+}
+.industryTag:hover {
+  border-color: var(--light-tertiary);
+  color: var(--light-secondary);
+}
+
+@media (max-width: 1024px) {
+  .servicesRow { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 768px) {
+  .section { padding: var(--space-2xl) var(--space-lg); }
+  .metricsRow { grid-template-columns: repeat(2, 1fr); gap: var(--space-xl); }
+  .servicesRow { grid-template-columns: 1fr; }
+}
