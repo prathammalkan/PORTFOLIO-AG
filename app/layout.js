@@ -1,5 +1,6 @@
 import { Space_Grotesk, Playfair_Display, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+import PageTracker from '@/components/Analytics/PageTracker';
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-primary",
@@ -55,6 +56,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${spaceGrotesk.variable} ${playfairDisplay.variable} ${jetbrainsMono.variable}`}>
       <body>
+        <PageTracker />
         {children}
       </body>
     </html>
