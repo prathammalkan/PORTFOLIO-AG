@@ -80,10 +80,16 @@
 .photoLabel {
   font-size: var(--text-small);
   color: var(--light-secondary);
+  position: relative;
+  z-index: 1;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.8);
 }
 .photoLocation {
   font-size: var(--text-micro);
   color: var(--light-tertiary);
+  position: relative;
+  z-index: 1;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.8);
 }
 .philosophySection { margin-bottom: var(--space-3xl); }
 .philosophyGrid {

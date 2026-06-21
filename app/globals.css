@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=JetBrains+Mono:wght@300;400;500&display=swap');
+/* Fonts loaded via next/font/google in layout.js */
 
 /* ========== @property for animated gradients ========== */
 @property --gradient-angle {
@@ -111,8 +111,9 @@ body {
 }
 
 /* Custom cursor - hide default on desktop */
+/* .admin-page class added to admin body prevents this from applying */
 @media (pointer: fine) {
-  * { cursor: none !important; }
+  body:not(.admin-page) * { cursor: none !important; }
 }
 
 /* Anchor scroll offset for sticky header */

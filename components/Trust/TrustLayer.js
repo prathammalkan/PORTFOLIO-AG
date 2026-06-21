@@ -17,7 +17,7 @@ const metrics = [
 
 const services = [
   {
-    world: 'code',
+    world: 'code', id: 'world-code',
     icon: (
       <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
         <polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>
@@ -25,10 +25,9 @@ const services = [
     ),
     title: 'Web & App Development',
     desc: 'Custom websites, web applications, and mobile apps built for performance and scale.',
-    link: '#world-code',
   },
   {
-    world: 'cinema',
+    world: 'cinema', id: 'world-cinema',
     icon: (
       <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
         <polygon points="5 3 19 12 5 21 5 3"/>
@@ -36,10 +35,9 @@ const services = [
     ),
     title: 'Video Editing & Motion',
     desc: 'Commercial videos, social media content, motion graphics, and promotional reels.',
-    link: '#world-cinema',
   },
   {
-    world: 'canvas',
+    world: 'canvas', id: 'world-canvas',
     icon: (
       <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
         <path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/>
@@ -47,10 +45,9 @@ const services = [
     ),
     title: 'Graphic Design & Branding',
     desc: 'Logo design, brand identity, social media creatives, print materials, and visual systems.',
-    link: '#world-canvas',
   },
   {
-    world: 'about',
+    world: 'about', id: 'world-about',
     icon: (
       <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
         <circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/>
@@ -58,7 +55,6 @@ const services = [
     ),
     title: 'Product Strategy',
     desc: 'End-to-end product thinking — from concept and user research through design to launch.',
-    link: '#world-about',
   },
 ];
 
@@ -96,6 +92,11 @@ function AnimatedCounter({ value, suffix }) {
 export default function TrustLayer() {
   const sectionRef = useRef(null);
 
+  const scrollTo = (id) => {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+  };
+
   useEffect(() => {
     if (typeof window === 'undefined') return;
     const ctx = gsap.context(() => {
@@ -128,12 +129,17 @@ export default function TrustLayer() {
 
       <div className={styles.servicesRow}>
         {services.map((s, i) => (
-          <a key={i} href={s.link} className={`${styles.serviceCard} ${styles[s.world]}`}>
+          <button
+            key={i}
+            className={`${styles.serviceCard} ${styles[s.world]}`}
+            onClick={() => scrollTo(s.id)}
+            aria-label={`Go to ${s.title} section`}
+          >
             <div className={styles.serviceIcon}>{s.icon}</div>
             <h3 className={styles.serviceTitle}>{s.title}</h3>
             <p className={styles.serviceDesc}>{s.desc}</p>
             <span className={styles.serviceLink}>Learn More →</span>
-          </a>
+          </button>
         ))}
       </div>
 

@@ -10,6 +10,16 @@ const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 );
 
+// HTML escape to prevent injection in email body
+function esc(str) {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
 // Rate limiting map (in-memory, resets on server restart)
 const rateLimitMap = new Map();
 const RATE_LIMIT = 3;
@@ -72,18 +82,18 @@ export async function POST(request) {
       from: 'Portfolio Contact <onboarding@resend.dev>',
       to: process.env.CONTACT_EMAIL || 'malkanpratham@gmail.com',
       replyTo: email,
-      subject: `Portfolio Inquiry: ${service} — from ${name}`,
+      subject: `Portfolio Inquiry: ${esc(service)} — from ${esc(name)}`,
       html: `
         <div style="font-family: system-ui, sans-serif; max-width: 600px; margin: 0 auto; color: #333;">
           <h2 style="color: #111; border-bottom: 2px solid #f0b429; padding-bottom: 12px;">New Portfolio Inquiry</h2>
           <table style="width: 100%; border-collapse: collapse; margin-bottom: 24px;">
-            <tr><td style="padding: 10px 0; color: #888; width: 100px;"><strong>Name</strong></td><td style="padding: 10px 0;">${name}</td></tr>
-            <tr style="background:#f9f9f9"><td style="padding: 10px 0; color: #888;"><strong>Email</strong></td><td style="padding: 10px 0;"><a href="mailto:${email}" style="color:#3399ff">${email}</a></td></tr>
-            <tr><td style="padding: 10px 0; color: #888;"><strong>Service</strong></td><td style="padding: 10px 0;"><strong>${service}</strong></td></tr>
-            <tr style="background:#f9f9f9"><td style="padding: 10px 0; color: #888;"><strong>Budget</strong></td><td style="padding: 10px 0;">${budget || 'Not specified'}</td></tr>
+            <tr><td style="padding: 10px 0; color: #888; width: 100px;"><strong>Name</strong></td><td style="padding: 10px 0;">${esc(name)}</td></tr>
+            <tr style="background:#f9f9f9"><td style="padding: 10px 0; color: #888;"><strong>Email</strong></td><td style="padding: 10px 0;"><a href="mailto:${esc(email)}" style="color:#3399ff">${esc(email)}</a></td></tr>
+            <tr><td style="padding: 10px 0; color: #888;"><strong>Service</strong></td><td style="padding: 10px 0;"><strong>${esc(service)}</strong></td></tr>
+            <tr style="background:#f9f9f9"><td style="padding: 10px 0; color: #888;"><strong>Budget</strong></td><td style="padding: 10px 0;">${budget ? esc(budget) : 'Not specified'}</td></tr>
           </table>
           <h3 style="color: #111;">Message</h3>
-          <div style="background: #f5f5f5; padding: 20px; border-radius: 8px; line-height: 1.7; white-space: pre-wrap;">${message}</div>
+          <div style="background: #f5f5f5; padding: 20px; border-radius: 8px; line-height: 1.7; white-space: pre-wrap;">${esc(message)}</div>
           <p style="margin-top: 24px; font-size: 12px; color: #aaa;">Sent via Portfolio Contact Form · prathammalkan.com</p>
         </div>
       `,
