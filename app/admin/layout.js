@@ -8,7 +8,7 @@ const pageTitles = {
   '/admin/projects/new': { title: 'New Project', sub: 'Create a new portfolio project' },
   '/admin/videos': { title: 'Videos', sub: 'Manage your video work' },
   '/admin/videos/new': { title: 'Add Video', sub: 'Add a new video to your portfolio' },
-  '/admin/design': { title: 'Design Assets', sub: 'Manage your graphic design work' },
+  '/admin/design': { title: 'Design Assets', sub: 'Manage your graphic design & visual work' },
   '/admin/testimonials': { title: 'Testimonials', sub: 'Client testimonials and reviews' },
   '/admin/homepage': { title: 'Homepage Editor', sub: 'Edit your homepage content without code' },
   '/admin/media': { title: 'Media Library', sub: 'All uploaded files and assets' },
