@@ -52,9 +52,42 @@ export const metadata = {
   },
 };
 
+const schemaData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Person',
+      '@id': 'https://prathammalkan.com/#person',
+      name: 'Pratham Malkan',
+      url: 'https://prathammalkan.com',
+      jobTitle: 'Creative Technologist',
+      sameAs: [
+        'https://github.com/prathammalkan',
+        'https://www.linkedin.com/in/pratham-malkan-aa2388376',
+        'https://x.com/PrathamM1310',
+        'https://www.instagram.com/pratham.malkan'
+      ],
+      description: 'Multidisciplinary Creative Technologist crafting digital experiences through design, code, and motion.'
+    },
+    {
+      '@type': 'WebSite',
+      '@id': 'https://prathammalkan.com/#website',
+      url: 'https://prathammalkan.com',
+      name: 'Pratham Malkan Portfolio',
+      publisher: { '@id': 'https://prathammalkan.com/#person' }
+    }
+  ]
+};
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${spaceGrotesk.variable} ${playfairDisplay.variable} ${jetbrainsMono.variable}`}>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
+        />
+      </head>
       <body>
         <PageTracker />
         {children}

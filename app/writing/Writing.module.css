@@ -1,0 +1,114 @@
+.container {
+  min-height: 100vh;
+  background-color: var(--void-black);
+  color: var(--light-primary);
+  font-family: var(--font-primary);
+  padding: 0 var(--space-xl);
+}
+
+.nav {
+  padding: var(--space-xl) 0;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.backLink {
+  font-size: var(--text-small);
+  color: var(--light-tertiary);
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  transition: color 0.3s ease;
+}
+
+.backLink:hover {
+  color: var(--light-primary);
+}
+
+.header {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: var(--space-2xl) 0 var(--space-3xl);
+  border-bottom: 1px solid var(--void-border);
+}
+
+.title {
+  font-size: var(--text-hero);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  margin-bottom: var(--space-md);
+}
+
+.subtitle {
+  font-size: var(--text-heading);
+  font-family: var(--font-editorial);
+  font-style: italic;
+  color: var(--light-secondary);
+}
+
+.main {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: var(--space-3xl) 0;
+}
+
+.articleList {
+  display: flex;
+  flex-direction: column;
+}
+
+.articleCard {
+  display: block;
+  padding: var(--space-2xl) 0;
+  border-bottom: 1px solid var(--void-border);
+  text-decoration: none;
+  transition: transform 0.3s ease;
+}
+
+.articleCard:hover {
+  transform: translateX(10px);
+}
+
+.articleCard:hover .articleTitle {
+  color: var(--code-primary);
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  margin-bottom: var(--space-sm);
+  font-size: var(--text-micro);
+  font-family: var(--font-mono);
+  color: var(--light-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.category {
+  color: var(--cinema-primary);
+}
+
+.articleTitle {
+  font-size: var(--text-subheading);
+  font-weight: 600;
+  color: var(--light-primary);
+  margin-bottom: var(--space-sm);
+  transition: color 0.3s ease;
+}
+
+.articleExcerpt {
+  font-size: var(--text-body);
+  color: var(--light-secondary);
+  line-height: 1.6;
+  margin-bottom: var(--space-md);
+}
+
+.readMore {
+  font-size: var(--text-micro);
+  color: var(--light-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+}

@@ -14,6 +14,22 @@
   background: linear-gradient(90deg, transparent, var(--code-primary), var(--cinema-primary), var(--canvas-primary), var(--about-primary), transparent);
   opacity: 0.4;
 }
+.sectionHeader {
+  text-align: center;
+  margin-bottom: var(--space-xl);
+}
+.sectionTitle {
+  font-size: var(--text-heading);
+  font-weight: 700;
+  color: var(--light-primary);
+  margin-bottom: var(--space-xs);
+  letter-spacing: -0.02em;
+}
+.sectionSubtitle {
+  font-size: var(--text-body);
+  color: var(--light-secondary);
+}
+
 .metricsRow {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -35,6 +51,37 @@
   text-transform: uppercase;
   letter-spacing: 0.2em;
 }
+.logoCloudSection {
+  margin-bottom: var(--space-xl);
+  text-align: center;
+}
+.logoCloudTitle {
+  font-size: var(--text-micro);
+  color: var(--light-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  margin-bottom: var(--space-md);
+}
+.logoCloud {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: var(--space-xl);
+  align-items: center;
+  margin-bottom: var(--space-3xl);
+}
+.textLogo {
+  font-family: var(--font-primary);
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: var(--void-border);
+  transition: color 0.3s ease;
+  cursor: default;
+}
+.textLogo:hover {
+  color: var(--light-secondary);
+}
+
 .servicesRow {
   display: grid;
   grid-template-columns: repeat(4, 1fr);

@@ -32,6 +32,10 @@ export default function Testimonials() {
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      gsap.set(`.${styles.card}`, { opacity: 1, y: 0 });
+      return;
+    }
     const ctx = gsap.context(() => {
       gsap.fromTo(`.${styles.card}`, { opacity: 0, y: 40 }, {
         opacity: 1, y: 0, stagger: 0.15, duration: 0.8, ease: 'power3.out',

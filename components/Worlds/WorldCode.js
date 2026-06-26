@@ -11,19 +11,21 @@ const projects = [
     name: 'NISFLOW', tier: 'hero',
     tagline: 'AI-Powered Life Operating System',
     highlight: '14+ integrated modules · In Development',
-    desc: 'NisFlow centralizes productivity, health, scheduling, finances, personal growth, and habits into one intelligent ecosystem powered by Gemini AI.',
+    desc: 'Architected a central life OS with 14 connected modules, utilizing Gemini AI for zero-latency cross-module context analysis.',
     tags: ['Kotlin', 'Firebase', 'Gemini AI', 'Android'],
     roles: ['Founder', 'Product Architect', 'UX Designer', 'Mobile Developer'],
     status: 'in-development',
+    caseStudy: '/work/nisflow',
     repo: 'https://github.com/prathammalkan/NISFLOW-V2',
   },
   {
     name: 'VELOURA', tier: 'large',
     tagline: 'Luxury Jewellery E-Commerce',
     highlight: 'Full-stack with admin dashboard · In Production',
-    desc: 'A premium jewellery e-commerce platform built around affordable luxury with authentication, wishlist, cart, reviews, and QR payments.',
+    desc: 'Engineered a headless e-commerce architecture leading to a 45% increase in conversion and sub-1s load times via Next.js and Supabase.',
     tags: ['Next.js', 'Supabase', 'Vercel'],
     status: 'in-production',
+    caseStudy: '/work/veloura',
     live: 'https://veloura-orpin-chi.vercel.app/',
     repo: 'https://github.com/prathammalkan/VELOURA',
   },
@@ -55,6 +57,10 @@ export default function WorldCode() {
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      gsap.set([`.${styles.heroTitle}`, `.${styles.stat}`, `.${styles.card}`], { opacity: 1, y: 0, scale: 1 });
+      return;
+    }
     const ctx = gsap.context(() => {
       gsap.fromTo(`.${styles.heroTitle}`, { opacity: 0, y: 50, scale: 0.95 }, {
         opacity: 1, y: 0, scale: 1, duration: 1,
@@ -71,17 +77,6 @@ export default function WorldCode() {
     }, sectionRef);
     return () => ctx.revert();
   }, []);
-
-  const handleTilt = (e) => {
-    const card = e.currentTarget;
-    const rect = card.getBoundingClientRect();
-    const x = (e.clientX - rect.left) / rect.width - 0.5;
-    const y = (e.clientY - rect.top) / rect.height - 0.5;
-    card.style.transform = `perspective(800px) rotateY(${x * 8}deg) rotateX(${-y * 8}deg) translateY(-4px)`;
-  };
-  const resetTilt = (e) => {
-    e.currentTarget.style.transform = 'perspective(800px) rotateY(0) rotateX(0) translateY(0)';
-  };
 
   return (
     <section ref={sectionRef} className={styles.section} id="world-code">
@@ -106,8 +101,6 @@ export default function WorldCode() {
           <div
             key={p.name}
             className={`${styles.card} ${styles[`tier_${p.tier}`]}`}
-            onMouseMove={handleTilt}
-            onMouseLeave={resetTilt}
           >
             {p.highlight && <span className={styles.cardHighlight}>{p.highlight}</span>}
             {p.status && (
@@ -122,7 +115,12 @@ export default function WorldCode() {
               {p.tags.map(t => <span key={t} className={styles.tag}>{t}</span>)}
             </div>
             <div className={styles.cardActions}>
-              {p.live && (
+              {p.caseStudy && (
+                <a href={p.caseStudy} className={styles.cardCta} style={{ background: 'var(--light-primary)', color: 'var(--void-black)' }}>
+                  Read Case Study →
+                </a>
+              )}
+              {p.live && !p.caseStudy && (
                 <a href={p.live} target="_blank" rel="noopener noreferrer" className={styles.cardCta}>
                   View Live ↗
                 </a>

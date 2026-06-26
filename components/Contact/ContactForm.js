@@ -2,10 +2,12 @@
 import { useState } from 'react';
 import styles from './ContactForm.module.css';
 
-const services = ['Web Development', 'App Development', 'Video Editing', 'Graphic Design', 'Multiple Services', 'Other'];
+const buildingOptions = ['Web Application', 'E-Commerce Platform', 'Marketing Website', 'Brand Identity', 'Video Production', 'Other'];
+const goalOptions = ['Launch an MVP', 'Redesign existing product', 'Scale architecture & performance', 'Ongoing partnership', 'Consulting & Audit'];
+const timelineOptions = ['Immediately', '1-2 Months', '3+ Months', 'Flexible'];
 
 export default function ContactForm() {
-  const [form, setForm] = useState({ name: '', email: '', service: '', budget: '', message: '', _honey: '' });
+  const [form, setForm] = useState({ name: '', email: '', building: '', goal: '', timeline: '', budget: '', message: '', _honey: '' });
   const [status, setStatus] = useState('idle'); // idle | sending | sent | error
   const [errorMsg, setErrorMsg] = useState('');
 
@@ -62,6 +64,43 @@ export default function ContactForm() {
             <input type="text" name="_honey" value={form._honey} onChange={handle} tabIndex={-1} autoComplete="off" />
           </div>
 
+          <div className={styles.row}>
+            <div className={styles.field}>
+              <label className={styles.label} htmlFor="building">What are we building?</label>
+              <select className={styles.select} id="building" name="building" value={form.building} onChange={handle} required>
+                <option value="">Select project type</option>
+                {buildingOptions.map(o => <option key={o} value={o}>{o}</option>)}
+              </select>
+            </div>
+            <div className={styles.field}>
+              <label className={styles.label} htmlFor="goal">Primary business goal</label>
+              <select className={styles.select} id="goal" name="goal" value={form.goal} onChange={handle} required>
+                <option value="">Select primary goal</option>
+                {goalOptions.map(o => <option key={o} value={o}>{o}</option>)}
+              </select>
+            </div>
+          </div>
+          
+          <div className={styles.row}>
+            <div className={styles.field}>
+              <label className={styles.label} htmlFor="timeline">Expected timeline</label>
+              <select className={styles.select} id="timeline" name="timeline" value={form.timeline} onChange={handle} required>
+                <option value="">Select timeline</option>
+                {timelineOptions.map(o => <option key={o} value={o}>{o}</option>)}
+              </select>
+            </div>
+            <div className={styles.field}>
+              <label className={styles.label} htmlFor="budget">Budget allocated</label>
+              <select className={styles.select} id="budget" name="budget" value={form.budget} onChange={handle} required>
+                <option value="">Select budget range</option>
+                <option value="5k-10k">$5,000 – $10,000</option>
+                <option value="10k-25k">$10,000 – $25,000</option>
+                <option value="25k+">$25,000+</option>
+                <option value="discuss">Let&apos;s Discuss</option>
+              </select>
+            </div>
+          </div>
+
           <div className={styles.row} suppressHydrationWarning>
             <div className={styles.field} suppressHydrationWarning>
               <label className={styles.label} htmlFor="name">Name</label>
@@ -72,30 +111,10 @@ export default function ContactForm() {
               <input className={styles.input} type="email" id="email" name="email" value={form.email} onChange={handle} required placeholder="your@email.com" suppressHydrationWarning />
             </div>
           </div>
-          <div className={styles.row}>
-            <div className={styles.field}>
-              <label className={styles.label} htmlFor="service">Service Interest</label>
-              <select className={styles.select} id="service" name="service" value={form.service} onChange={handle} required>
-                <option value="">Select a service</option>
-                {services.map(s => <option key={s} value={s}>{s}</option>)}
-              </select>
-            </div>
-            <div className={styles.field}>
-              <label className={styles.label} htmlFor="budget">Budget Range</label>
-              <select className={styles.select} id="budget" name="budget" value={form.budget} onChange={handle}>
-                <option value="">Select range</option>
-                <option value="<25k">&lt; ₹25K</option>
-                <option value="25k-50k">₹25K – 50K</option>
-                <option value="50k-1l">₹50K – 1L</option>
-                <option value="1l-3l">₹1L – 3L</option>
-                <option value="3l+">₹3L+</option>
-                <option value="discuss">Let&apos;s Discuss</option>
-              </select>
-            </div>
-          </div>
+
           <div className={styles.field}>
             <label className={styles.label} htmlFor="message">Project Details</label>
-            <textarea className={styles.textarea} id="message" name="message" value={form.message} onChange={handle} required rows="5" placeholder="Tell me about your project..." />
+            <textarea className={styles.textarea} id="message" name="message" value={form.message} onChange={handle} required rows="5" placeholder="Tell me more about the project context..." />
           </div>
 
           {status === 'error' && (

@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import styles from './WorldCinema.module.css';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -14,7 +14,8 @@ const clients = [
     challenge: 'Needed engaging social content to drive footfall and build brand presence on Instagram.',
     solution: 'Created high-energy promotional reels with dynamic motion graphics and appetizing visual storytelling.',
     result: 'Increased social media engagement and brand visibility across platforms.',
-    driveLink: 'https://drive.google.com/drive/folders/1YapyohfakubXb8d3Zd0tbSCrk4UxzSD5',
+    poster: '/og-image.png',
+    videoStream: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
   },
   {
     name: 'Sneh Khatri', industry: 'Personal Branding', role: 'Video Editor',
@@ -23,11 +24,94 @@ const clients = [
     challenge: 'Needed professional video content to establish a strong personal brand on social media.',
     solution: 'Produced polished reels and brand videos with consistent visual identity and compelling pacing.',
     result: 'Strengthened personal brand presence with professional-quality content.',
-    driveLink: 'https://drive.google.com/drive/folders/1KjLrDxBCRHU8u9NwsYgZV0buF3G5YHJe',
+    poster: '/profile.png',
+    videoStream: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
   },
 ];
 
 const skills = ['After Effects', 'Motion Graphics', 'Color Grading', 'Pacing & Rhythm', 'Sound Design', 'Storytelling'];
+
+function VideoCard({ c }) {
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const videoRef = useRef(null);
+
+  const togglePlay = () => {
+    const vid = videoRef.current;
+    if (!vid) return;
+    if (vid.paused) {
+      setIsLoading(true);
+      vid.play();
+      setIsPlaying(true);
+    } else {
+      vid.pause();
+      setIsPlaying(false);
+    }
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      togglePlay();
+    }
+  };
+
+  const toggleFullscreen = (e) => {
+    e.stopPropagation();
+    const vid = videoRef.current;
+    if (!vid) return;
+    if (vid.requestFullscreen) vid.requestFullscreen();
+    else if (vid.webkitRequestFullscreen) vid.webkitRequestFullscreen();
+  };
+
+  return (
+    <div
+      className={styles.videoCardContainer}
+      onClick={togglePlay}
+      role="button"
+      tabIndex={0}
+      onKeyDown={handleKeyDown}
+      aria-label={`Play or pause showcase video for ${c.name}`}
+    >
+      <video
+        ref={videoRef}
+        className={styles.html5Video}
+        poster={c.poster}
+        preload="metadata"
+        playsInline
+        loop
+        onWaiting={() => setIsLoading(true)}
+        onPlaying={() => setIsLoading(false)}
+        onCanPlay={() => setIsLoading(false)}
+      >
+        <source src={c.videoStream} type="video/mp4" />
+        Your browser does not support HTML5 video.
+      </video>
+
+      <div className={`${styles.videoOverlay} ${isPlaying ? styles.videoPlaying : ''}`}>
+        {isLoading ? (
+          <div className={styles.spinner} aria-label="Loading video..." />
+        ) : (
+          <button className={styles.playPauseBtn} aria-label={isPlaying ? 'Pause video' : 'Play video'}>
+            {isPlaying ? (
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+            ) : (
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            )}
+          </button>
+        )}
+        <button
+          className={styles.fullscreenBtn}
+          onClick={toggleFullscreen}
+          aria-label="View fullscreen"
+          title="Fullscreen"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+        </button>
+      </div>
+    </div>
+  );
+}
 
 export default function WorldCinema() {
   const sectionRef = useRef(null);
@@ -69,16 +153,7 @@ export default function WorldCinema() {
               <span>Duration: {c.duration}</span>
             </div>
 
-            <div className={styles.videoPlaceholder}>
-              <div className={styles.playIcon}>
-                <svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor">
-                  <polygon points="5 3 19 12 5 21 5 3"/>
-                </svg>
-              </div>
-              <a href={c.driveLink} target="_blank" rel="noopener noreferrer" className={styles.viewWork}>
-                View Work on Drive ↗
-              </a>
-            </div>
+            <VideoCard c={c} />
 
             <div className={styles.workTags}>
               {c.work.map(w => <span key={w} className={styles.workTag}>{w}</span>)}

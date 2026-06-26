@@ -88,33 +88,88 @@
   font-size: var(--text-small);
   color: var(--light-tertiary);
 }
-.videoPlaceholder {
+.videoCardContainer {
   aspect-ratio: 16 / 9;
-  background: linear-gradient(135deg, hsla(8, 85%, 58%, 0.05), hsla(25, 100%, 55%, 0.03));
-  border: 1px solid hsla(8, 85%, 58%, 0.1);
+  background: var(--void-surface);
+  border: 1px solid hsla(8, 85%, 58%, 0.15);
   border-radius: var(--radius-md);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: var(--space-md);
-  transition: border-color 0.3s ease;
   position: relative;
-}
-.videoPlaceholder:hover { border-color: hsla(8, 85%, 58%, 0.3); }
-.playIcon {
-  color: var(--cinema-primary);
-  opacity: 0.6;
+  overflow: hidden;
+  cursor: pointer;
   transition: all 0.3s ease;
 }
-.videoPlaceholder:hover .playIcon { opacity: 1; transform: scale(1.1); }
-.viewWork {
-  font-size: var(--text-small);
-  color: var(--cinema-primary);
-  letter-spacing: 0.05em;
-  transition: color 0.3s ease;
+.videoCardContainer:hover {
+  border-color: hsla(8, 85%, 58%, 0.4);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
 }
-.viewWork:hover { color: var(--cinema-glow); }
+.videoCardContainer:focus-visible {
+  outline: 2px solid var(--cinema-primary);
+  outline-offset: 3px;
+}
+.html5Video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.videoOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.3s ease, background 0.3s ease;
+}
+.videoPlaying {
+  background: transparent;
+  opacity: 0;
+}
+.videoCardContainer:hover .videoOverlay {
+  opacity: 1;
+  background: rgba(0, 0, 0, 0.3);
+}
+.playPauseBtn {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: rgba(224, 85, 51, 0.9);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 20px rgba(224, 85, 51, 0.5);
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+.videoCardContainer:hover .playPauseBtn {
+  transform: scale(1.08);
+  background: var(--cinema-glow);
+}
+.fullscreenBtn {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  padding: 8px;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(255,255,255,0.2);
+  transition: background 0.2s ease;
+}
+.fullscreenBtn:hover {
+  background: var(--cinema-primary);
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+.spinner {
+  width: 48px;
+  height: 48px;
+  border: 4px solid rgba(255, 255, 255, 0.2);
+  border-top-color: var(--cinema-primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
 .workTags {
   display: flex;
   flex-wrap: wrap;

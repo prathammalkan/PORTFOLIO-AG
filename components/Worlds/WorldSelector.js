@@ -35,6 +35,10 @@ export default function WorldSelector() {
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      gsap.set([`.${styles.sectionTitle}`, `.${styles.panel}`], { opacity: 1, y: 0 });
+      return;
+    }
     const ctx = gsap.context(() => {
       gsap.fromTo(`.${styles.sectionTitle}`, { opacity: 0, y: 20 }, {
         opacity: 1, y: 0, duration: 0.8,

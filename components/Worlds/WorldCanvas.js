@@ -7,12 +7,11 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 if (typeof window !== 'undefined') gsap.registerPlugin(ScrollTrigger);
 
 const tools = [
-  { name: 'Adobe Photoshop', level: 95, label: 'Expert' },
-  { name: 'Adobe After Effects', level: 80, label: 'Advanced' },
-  { name: 'Adobe Illustrator', level: 80, label: 'Advanced' },
-  { name: 'Blender', level: 55, label: 'Intermediate' },
-  { name: 'CorelDRAW', level: 80, label: 'Advanced' },
-  { name: 'Canva', level: 95, label: 'Expert' },
+  { name: 'Figma', category: 'Interface Systems' },
+  { name: 'Adobe Photoshop', category: 'Retouching & Raster' },
+  { name: 'Adobe Illustrator', category: 'Vector & Brand' },
+  { name: 'After Effects', category: 'Motion Design' },
+  { name: 'Blender', category: '3D & Spatial' },
 ];
 
 const services = [
@@ -40,8 +39,8 @@ export default function WorldCanvas() {
         opacity: 1, y: 0, stagger: 0.06, duration: 0.5,
         scrollTrigger: { trigger: `.${styles.servicesGrid}`, start: 'top 80%' }
       });
-      gsap.fromTo(`.${styles.toolItem}`, { opacity: 0, x: -20 }, {
-        opacity: 1, x: 0, stagger: 0.08, duration: 0.6,
+      gsap.fromTo(`.${styles.toolCard}`, { opacity: 0, y: 20 }, {
+        opacity: 1, y: 0, stagger: 0.08, duration: 0.6,
         scrollTrigger: { trigger: `.${styles.toolsGrid}`, start: 'top 80%' }
       });
     }, sectionRef);
@@ -68,24 +67,15 @@ export default function WorldCanvas() {
       </div>
 
       <div className={styles.toolsSection}>
-        <h3 className={styles.toolsTitle}>Design Tools</h3>
+        <h3 className={styles.toolsTitle}>Design Stack</h3>
         <div className={styles.toolsGrid}>
           {tools.map(t => (
-            <div key={t.name} className={styles.toolItem}>
-              <div className={styles.toolHeader}>
-                <span className={styles.toolName}>{t.name}</span>
-                <span className={styles.toolLabel}>{t.label}</span>
-              </div>
-              <div className={styles.toolBar}>
-                <div className={styles.toolFill} style={{ width: `${t.level}%` }} />
-              </div>
+            <div key={t.name} className={styles.toolCard}>
+              <span className={styles.toolName}>{t.name}</span>
+              <span className={styles.toolCategory}>{t.category}</span>
             </div>
           ))}
         </div>
-      </div>
-
-      <div className={styles.note}>
-        <p>Portfolio samples from previous design work will be added soon.</p>
       </div>
 
       <div className={styles.worldCta}>

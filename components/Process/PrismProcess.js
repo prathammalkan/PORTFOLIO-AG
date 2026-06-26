@@ -7,12 +7,9 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 if (typeof window !== 'undefined') gsap.registerPlugin(ScrollTrigger);
 
 const steps = [
-  { num: '01', title: 'DISCOVER', desc: 'Understanding your vision, goals, audience, and constraints.', detail: 'Brief/call, requirement gathering, research', color: 'var(--light-primary)' },
-  { num: '02', title: 'PLAN', desc: 'Mapping the path from concept to completion.', detail: 'Strategy, wireframes, timeline, milestones', color: 'var(--light-secondary)' },
-  { num: '03', title: 'DESIGN', desc: 'Crafting the visual language and experience.', detail: 'UI design, brand direction, prototyping', color: 'var(--canvas-primary)' },
-  { num: '04', title: 'BUILD', desc: 'Engineering the experience with precision.', detail: 'Development, editing, production', color: 'var(--code-primary)' },
-  { num: '05', title: 'DELIVER', desc: 'Launching with confidence and quality.', detail: 'Testing, refinement, deployment', color: 'var(--cinema-primary)' },
-  { num: '06', title: 'SUPPORT', desc: 'Ongoing partnership beyond launch.', detail: 'Maintenance, updates, optimization', color: 'var(--about-primary)' },
+  { num: 'PHASE 01', title: 'ARCHITECTURE & PROTOTYPING', desc: 'Laying the foundation. We map out the database schema, system design, and high-fidelity wireframes.', detail: 'System Design, Figma Prototypes, Tech Stack Selection', color: 'var(--code-primary)' },
+  { num: 'PHASE 02', title: 'THE CORE ENGINEERING LOOP', desc: 'Building the engine. Writing the business logic, setting up authentication, and connecting the backend.', detail: 'Database Models, API Routes, State Management', color: 'var(--cinema-primary)' },
+  { num: 'PHASE 03', title: 'POLISH, MOTION & DEPLOYMENT', desc: 'The final 10%. We add micro-interactions, optimize performance, and deploy to production.', detail: 'GSAP Animations, CI/CD Pipelines, Performance Audit', color: 'var(--canvas-primary)' },
 ];
 
 export default function PrismProcess() {
@@ -20,6 +17,10 @@ export default function PrismProcess() {
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      gsap.set([`.${styles.title}`, `.${styles.step}`, `.${styles.beamFill}`], { opacity: 1, y: 0, x: 0, scaleX: 1 });
+      return;
+    }
     const ctx = gsap.context(() => {
       gsap.fromTo(`.${styles.title}`, { opacity: 0, y: 30 }, {
         opacity: 1, y: 0, duration: 0.8,

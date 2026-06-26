@@ -1,5 +1,6 @@
 'use client';
 import { useEffect, useRef } from 'react';
+import Image from 'next/image';
 import styles from './WorldAbout.module.css';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -81,7 +82,7 @@ export default function WorldAbout() {
         </div>
         <div className={styles.storyImage}>
           <div className={styles.photoContainer}>
-            <img src="/profile.jpeg" alt="Pratham Malkan" className={styles.photo} />
+            <Image src="/profile.png" alt="Pratham Malkan" width={400} height={400} priority className={styles.photo} />
             <span className={styles.photoLabel}>Pratham Malkan</span>
             <span className={styles.photoLocation}>📍 India</span>
           </div>

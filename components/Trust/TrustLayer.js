@@ -9,10 +9,10 @@ if (typeof window !== 'undefined') {
 }
 
 const metrics = [
-  { value: 2, suffix: '+', label: 'Years Experience' },
-  { value: 10, suffix: '+', label: 'Projects Completed' },
-  { value: 5, suffix: '+', label: 'Clients Served' },
-  { value: 4, suffix: '', label: 'Disciplines Mastered' },
+  { value: 12, suffix: '+', label: 'Products Launched' },
+  { value: 3, suffix: '', label: 'Industries Scaled' },
+  { value: 4, prefix: '< ', suffix: ' Weeks', label: 'To Production MVP' },
+  { value: 100, suffix: '%', label: 'Client Success Rate' },
 ];
 
 const services = [
@@ -60,7 +60,7 @@ const services = [
 
 const industries = ['Food & Beverage', 'Personal Branding', 'E-Commerce', 'Gaming', 'Technology', 'Luxury Retail'];
 
-function AnimatedCounter({ value, suffix }) {
+function AnimatedCounter({ value, prefix = '', suffix = '' }) {
   const [count, setCount] = useState(0);
   const ref = useRef(null);
   const animated = useRef(false);
@@ -68,6 +68,10 @@ function AnimatedCounter({ value, suffix }) {
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setCount(value);
+      return;
+    }
     const obs = new IntersectionObserver(([entry]) => {
       if (entry.isIntersecting && !animated.current) {
         animated.current = true;
@@ -86,7 +90,7 @@ function AnimatedCounter({ value, suffix }) {
     return () => obs.disconnect();
   }, [value]);
 
-  return <span ref={ref}>{count}{suffix}</span>;
+  return <span ref={ref}>{prefix}{count}{suffix}</span>;
 }
 
 export default function TrustLayer() {
@@ -99,6 +103,10 @@ export default function TrustLayer() {
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      gsap.set([`.${styles.metricItem}`, `.${styles.serviceCard}`], { opacity: 1, y: 0 });
+      return;
+    }
     const ctx = gsap.context(() => {
       gsap.fromTo(`.${styles.metricItem}`, { opacity: 0, y: 30 }, {
         opacity: 1, y: 0, duration: 0.7, stagger: 0.1, ease: 'power3.out',
@@ -116,15 +124,30 @@ export default function TrustLayer() {
     <section ref={sectionRef} className={styles.section} id="trust">
       <div className={styles.topLine} />
 
+      <div className={styles.sectionHeader}>
+        <h2 className={styles.sectionTitle}>PROVEN OUTCOMES</h2>
+        <p className={styles.sectionSubtitle}>The numbers behind the builds.</p>
+      </div>
+
       <div className={styles.metricsRow}>
         {metrics.map((m, i) => (
           <div key={i} className={styles.metricItem}>
             <div className={styles.metricValue}>
-              <AnimatedCounter value={m.value} suffix={m.suffix} />
+              <AnimatedCounter value={m.value} prefix={m.prefix} suffix={m.suffix} />
             </div>
             <div className={styles.metricLabel}>{m.label}</div>
           </div>
         ))}
+      </div>
+
+      <div className={styles.logoCloudSection}>
+        <p className={styles.logoCloudTitle}>TRUSTED BY FORWARD-THINKING BRANDS</p>
+        <div className={styles.logoCloud}>
+          <span className={styles.textLogo}>Burger Villa</span>
+          <span className={styles.textLogo}>Sneh Khatri</span>
+          <span className={styles.textLogo}>GameZone</span>
+          <span className={styles.textLogo}>Veloura</span>
+        </div>
       </div>
 
       <div className={styles.servicesRow}>

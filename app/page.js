@@ -11,6 +11,7 @@ import WorldCode from '@/components/Worlds/WorldCode';
 import WorldCinema from '@/components/Worlds/WorldCinema';
 import WorldCanvas from '@/components/Worlds/WorldCanvas';
 import WorldAbout from '@/components/Worlds/WorldAbout';
+import InsideTheBuild from '@/components/InsideTheBuild/InsideTheBuild';
 import Testimonials from '@/components/Testimonials/Testimonials';
 import PrismProcess from '@/components/Process/PrismProcess';
 import ContactForm from '@/components/Contact/ContactForm';
@@ -57,10 +58,13 @@ export default function Home() {
 
   return (
     <>
+      <a href="#main-content" className="sr-only focus:not-sr-only" style={{ position: 'absolute', top: '16px', left: '16px', zIndex: 99999, background: 'var(--code-primary)', color: '#000', padding: '12px 24px', fontWeight: 600, borderRadius: '4px' }}>
+        Skip to main content
+      </a>
       {mounted && !skipArrival && <ArrivalCanvas onComplete={handleArrivalComplete} />}
       <Navigation show={arrivalDone} />
       {arrivalDone && <CustomCursor />}
-      <main>
+      <main id="main-content">
         <PrismHero visible={arrivalDone} />
         <TrustLayer />
         <WorldSelector />
@@ -68,6 +72,7 @@ export default function Home() {
         <WorldCinema />
         <WorldCanvas />
         <WorldAbout />
+        <InsideTheBuild />
         <Testimonials />
         <PrismProcess />
         <ContactForm />
