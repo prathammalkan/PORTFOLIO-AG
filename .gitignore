@@ -40,4 +40,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# vercel
 .vercel
+SECRETS_AND_ENV_GUIDE.md
