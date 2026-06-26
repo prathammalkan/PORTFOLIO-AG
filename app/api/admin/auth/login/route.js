@@ -1,50 +1,68 @@
 import { NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-);
+import { getServerSupabase } from '@/lib/authServer';
 
 export async function POST(request) {
   try {
-    const { password } = await request.json();
+    const body = await request.json().catch(() => ({}));
+    const { password } = body;
     const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown';
     const userAgent = request.headers.get('user-agent') || '';
 
-    // Password is SERVER-ONLY — never exposed to client
     const correct = process.env.ADMIN_PASSWORD;
     if (!correct) {
       console.error('ADMIN_PASSWORD env var not set');
-      return NextResponse.json({ error: 'Server misconfiguration.' }, { status: 500 });
+      return NextResponse.json({ error: 'Authentication service unavailable.' }, { status: 503 });
     }
 
-    // Validate input
     if (!password || typeof password !== 'string' || password.length > 200) {
-      return NextResponse.json({ error: 'Invalid request.' }, { status: 400 });
+      return NextResponse.json({ error: 'Invalid credentials or account locked.' }, { status: 400 });
     }
 
+    const supabase = getServerSupabase();
+
+    // ── 1. RATE LIMITING & PROGRESSIVE LOCKOUT CHECK ──────────────────────────
+    const fifteenMinsAgo = new Date(Date.now() - 15 * 60 * 1000).toISOString();
+    const { count: failedCount } = await supabase
+      .from('login_attempts')
+      .select('*', { count: 'exact', head: true })
+      .eq('ip', ip)
+      .eq('success', false)
+      .gte('created_at', fifteenMinsAgo);
+
+    if (failedCount && failedCount >= 5) {
+      // Account locked state — return generic error with 429 status
+      await supabase.from('login_attempts').insert({ ip, user_agent: userAgent, success: false }).catch(() => {});
+      return NextResponse.json(
+        { error: 'Too many failed login attempts. IP temporarily locked for 15 minutes.' },
+        { status: 429 }
+      );
+    }
+
+    // ── 2. CREDENTIAL VALIDATION & TIMING MITIGATION ──────────────────────────
     if (password !== correct) {
-      // Log failed attempt (non-blocking)
-      supabase.from('login_attempts').insert({ ip, user_agent: userAgent, success: false }).then(() => {});
-      return NextResponse.json({ error: 'Invalid password.' }, { status: 401 });
+      // Constant-time artificial delay to throttle timing brute-forcing
+      await new Promise(resolve => setTimeout(resolve, 800));
+      await supabase.from('login_attempts').insert({ ip, user_agent: userAgent, success: false }).catch(() => {});
+      return NextResponse.json({ error: 'Invalid credentials or account locked.' }, { status: 401 });
     }
 
-    // Log success (non-blocking)
-    supabase.from('login_attempts').insert({ ip, user_agent: userAgent, success: true }).then(() => {});
+    // ── 3. SESSION CREATION ───────────────────────────────────────────────────
+    await supabase.from('login_attempts').insert({ ip, user_agent: userAgent, success: true }).catch(() => {});
 
-    // Create cryptographically secure session token
-    const token = crypto.randomUUID() + '-' + crypto.randomUUID();
+    // Generate cryptographically secure dual-UUID token
+    const token = crypto.randomUUID() + '_' + crypto.randomUUID();
+    const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString();
 
-    // Store session in DB (non-blocking)
-    supabase.from('admin_sessions').insert({
+    await supabase.from('admin_sessions').insert({
       session_token: token,
       ip,
       user_agent: userAgent,
-      expires_at: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
-    }).then(() => {});
+      role: 'Super Admin',
+      revoked: false,
+      expires_at: expiresAt,
+    }).catch(err => console.error('Failed to log session DB:', err));
 
-    const response = NextResponse.json({ success: true });
+    const response = NextResponse.json({ success: true, role: 'Super Admin' });
     response.cookies.set('admin_session', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
@@ -52,9 +70,10 @@ export async function POST(request) {
       maxAge: 60 * 60 * 24 * 7, // 7 days
       path: '/',
     });
+
     return response;
   } catch (err) {
-    console.error('Login error:', err);
-    return NextResponse.json({ error: 'Server error.' }, { status: 500 });
+    console.error('Login route exception:', err);
+    return NextResponse.json({ error: 'Authentication error.' }, { status: 500 });
   }
 }

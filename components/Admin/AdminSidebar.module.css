@@ -1,112 +1,257 @@
 .sidebar {
   position: fixed;
-  top: 0; left: 0;
+  top: 0;
+  left: 0;
   width: 240px;
   height: 100vh;
   background: hsl(240, 8%, 7%);
-  border-right: 1px solid rgba(255,255,255,0.06);
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
   display: flex;
   flex-direction: column;
   z-index: 100;
   overflow: hidden;
+  transition: width 0.2s ease, transform 0.3s ease;
 }
+
 .logo {
   padding: 1.5rem 1.25rem 1rem;
-  border-bottom: 1px solid rgba(255,255,255,0.06);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   display: flex;
   flex-direction: column;
   gap: 0.2rem;
   flex-shrink: 0;
 }
+
 .logoText {
   font-size: 1.4rem;
   font-weight: 800;
   letter-spacing: 0.1em;
-  background: linear-gradient(135deg, hsl(210,100%,60%), hsl(8,85%,58%), hsl(45,95%,58%), hsl(160,70%,50%));
+  background: linear-gradient(
+    135deg,
+    hsl(210, 100%, 60%),
+    hsl(8, 85%, 58%),
+    hsl(45, 95%, 58%),
+    hsl(160, 70%, 50%)
+  );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
+
 .logoAdmin {
   font-size: 0.55rem;
   letter-spacing: 0.3em;
-  color: hsl(0,0%,35%);
+  color: hsl(0, 0%, 35%);
   text-transform: uppercase;
   font-family: monospace;
 }
+
 .nav {
   flex: 1;
   overflow-y: auto;
   padding: 0.75rem 0;
   scrollbar-width: none;
 }
-.nav::-webkit-scrollbar { display: none; }
+.nav::-webkit-scrollbar {
+  display: none;
+}
+
 .group {
   padding: 0.5rem 0;
 }
+
 .groupLabel {
   display: block;
   font-size: 0.6rem;
   letter-spacing: 0.2em;
-  color: hsl(0,0%,30%);
+  color: hsl(0, 0%, 35%);
   padding: 0 1.25rem;
   margin-bottom: 0.25rem;
   text-transform: uppercase;
   font-weight: 600;
 }
+
 .item {
   display: flex;
   align-items: center;
   gap: 0.75rem;
   padding: 0.6rem 1.25rem;
-  color: hsl(0,0%,55%);
+  color: hsl(0, 0%, 65%);
   font-size: 0.82rem;
   transition: all 0.15s;
   border-left: 2px solid transparent;
   text-decoration: none;
   margin: 0.1rem 0;
+  min-height: 44px;
 }
+
 .item:hover {
-  color: hsl(0,0%,88%);
-  background: rgba(255,255,255,0.03);
+  color: white;
+  background: rgba(255, 255, 255, 0.04);
 }
+
 .itemActive {
-  color: hsl(210,100%,65%);
-  background: hsla(210,100%,60%,0.08);
-  border-left-color: hsl(210,100%,60%);
+  color: hsl(210, 100%, 65%);
+  background: hsla(210, 100%, 60%, 0.1);
+  border-left-color: hsl(210, 100%, 60%);
+  font-weight: 600;
 }
+
 .icon {
   display: flex;
   align-items: center;
   flex-shrink: 0;
 }
+
+.itemText {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .bottom {
-  border-top: 1px solid rgba(255,255,255,0.06);
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
   padding: 1rem 1.25rem;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
   flex-shrink: 0;
 }
-.viewSite {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 0.75rem;
-  color: hsl(0,0%,45%);
-  transition: color 0.2s;
-  text-decoration: none;
-  padding: 0.4rem 0;
-}
-.viewSite:hover { color: hsl(0,0%,75%); }
+
+.viewSite,
 .logout {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  font-size: 0.75rem;
-  color: hsl(8,85%,60%);
+  font-size: 0.78rem;
+  color: hsl(0, 0%, 65%);
   transition: color 0.2s;
-  padding: 0.4rem 0;
-  text-align: left;
+  text-decoration: none;
+  padding: 0.5rem 0;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  min-height: 44px;
 }
-.logout:hover { color: hsl(8,85%,72%); }
+.viewSite:hover {
+  color: white;
+}
+.logout {
+  color: hsl(8, 85%, 65%);
+}
+.logout:hover {
+  color: hsl(8, 85%, 78%);
+}
+
+.closeMobileBtn {
+  display: none;
+}
+
+.mobileOverlay {
+  display: none;
+}
+
+/* ── TABLET COLLAPSIBLE SIDEBAR (768px – 1024px) ─────────────────────────── */
+@media (max-width: 1024px) and (min-width: 768px) {
+  .sidebar {
+    width: 72px;
+  }
+  .logo {
+    padding: 1.25rem 0.5rem;
+    align-items: center;
+  }
+  .logoAdmin,
+  .groupLabel,
+  .itemText {
+    display: none;
+  }
+  .item {
+    justify-content: center;
+    padding: 0.75rem 0;
+    border-left: none;
+    border-bottom: 2px solid transparent;
+  }
+  .itemActive {
+    border-bottom-color: hsl(210, 100%, 60%);
+  }
+  .bottom {
+    padding: 0.75rem 0.5rem;
+    align-items: center;
+  }
+  .viewSite span,
+  .logout span {
+    display: none;
+  }
+}
+
+/* ── MOBILE DRAWER NAVIGATION (<768px) ───────────────────────────────────── */
+@media (max-width: 767px) {
+  .sidebar {
+    width: 260px;
+    transform: translateX(-100%);
+    z-index: 200;
+  }
+  .sidebarOpen {
+    transform: translateX(0) !important;
+    box-shadow: 20px 0 50px rgba(0, 0, 0, 0.8);
+  }
+  .closeMobileBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 1.25rem;
+    right: 1rem;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: hsl(0, 0%, 70%);
+    border-radius: 6px;
+    width: 36px;
+    height: 36px;
+    font-size: 1.25rem;
+    cursor: pointer;
+  }
+  .mobileOverlay {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(3px);
+    z-index: 180;
+    animation: fadeIn 0.2s ease;
+  }
+}
+
+.mainShell {
+  margin-left: 240px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  transition: margin-left 0.2s ease;
+  min-width: 0;
+}
+
+.hamburgerBtn {
+  display: none;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: white;
+  border-radius: 8px;
+  width: 44px;
+  height: 44px;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1.25rem;
+  margin-right: 0.75rem;
+}
+
+@media (max-width: 1024px) and (min-width: 768px) {
+  .mainShell { margin-left: 72px; }
+}
+
+@media (max-width: 767px) {
+  .mainShell { margin-left: 0; }
+  .hamburgerBtn { display: inline-flex; }
+}

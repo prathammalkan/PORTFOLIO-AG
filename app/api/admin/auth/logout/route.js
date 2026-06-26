@@ -1,20 +1,16 @@
 import { NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-);
+import { getServerSupabase } from '@/lib/authServer';
 
 export async function POST(request) {
   try {
     const token = request.cookies.get('admin_session')?.value;
 
-    // Revoke session in DB
     if (token) {
+      const supabase = getServerSupabase();
       await supabase.from('admin_sessions')
         .update({ revoked: true })
-        .eq('session_token', token);
+        .eq('session_token', token)
+        .catch(() => {});
     }
 
     const response = NextResponse.json({ success: true });
