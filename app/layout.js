@@ -27,13 +27,13 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata = {
   metadataBase: new URL('https://prathammalkan.com'),
   title: "Pratham Malkan — Creative Technologist | Design, Code & Motion",
-  description: "Multidisciplinary Creative Technologist crafting immersive digital experiences through design, code, and motion. Web Development, App Development, Video Editing, Graphic Design.",
+  description: "Multidisciplinary Creative Technologist designing and building high-performance web platforms, mobile apps, and motion systems.",
   keywords: ["Creative Technologist", "Web Developer", "App Developer", "Video Editor", "Graphic Designer", "Pratham Malkan", "Portfolio"],
   authors: [{ name: "Pratham Malkan" }],
   creator: "Pratham Malkan",
   openGraph: {
     title: "Pratham Malkan — Creative Technologist",
-    description: "Crafting immersive digital experiences through design, code, and motion.",
+    description: "Designing and building high-performance web platforms, mobile apps, and motion systems.",
     type: "website",
     locale: "en_US",
     siteName: "Pratham Malkan Portfolio",
@@ -42,7 +42,7 @@ export const metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Pratham Malkan — Creative Technologist",
-    description: "Crafting immersive digital experiences through design, code, and motion.",
+    description: "Designing and building high-performance web platforms, mobile apps, and motion systems.",
     creator: "@PrathamM1310",
     images: ['/og-image.png'],
   },
@@ -67,7 +67,7 @@ const schemaData = {
         'https://x.com/PrathamM1310',
         'https://www.instagram.com/pratham.malkan'
       ],
-      description: 'Multidisciplinary Creative Technologist crafting digital experiences through design, code, and motion.'
+      description: 'Multidisciplinary Creative Technologist designing and building digital experiences.'
     },
     {
       '@type': 'WebSite',

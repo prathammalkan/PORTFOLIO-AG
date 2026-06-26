@@ -51,7 +51,7 @@ export default function WorldCanvas() {
     <section ref={sectionRef} className={styles.section} id="world-canvas">
       <div className={styles.worldHero}>
         <h2 className={styles.heroTitle}>CANVAS</h2>
-        <p className={styles.heroSubtitle}>Visual stories crafted with intention</p>
+        <p className={styles.heroSubtitle}>Brand systems and visual design built with precision</p>
         <p className={styles.experience}>~2 Years of Professional Design Experience</p>
       </div>
 

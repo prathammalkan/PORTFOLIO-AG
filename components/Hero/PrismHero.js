@@ -106,7 +106,7 @@ export default function PrismHero({ visible }) {
           <p className={styles.title}>Creative Technologist</p>
 
           <p className={styles.statement}>
-            Multidisciplinary engineer crafting digital experiences across <strong>design, code, and motion</strong>. Partnering with early-stage startups to architect, build, and ship production-ready web platforms.
+            Multidisciplinary designer and engineer building high-performance web platforms, mobile apps, and motion systems. Partnering with founders to design, build, and ship production software.
           </p>
 
           {/* Capabilities */}

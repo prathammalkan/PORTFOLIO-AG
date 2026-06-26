@@ -1,41 +1,47 @@
 .wrapper {
   position: fixed;
   inset: 0;
-  z-index: 100;
+  z-index: 99999;
   background: rgb(8, 8, 14);
-  transition: opacity 0.8s ease-out;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.canvas {
-  width: 100%;
-  height: 100%;
-}
+
 .hidden {
   opacity: 0;
   pointer-events: none;
 }
-.skipButton {
-  position: fixed;
-  bottom: 2rem;
-  right: 2rem;
-  z-index: 101;
-  background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  color: rgba(255, 255, 255, 0.4);
-  padding: 0.5rem 1.5rem;
-  border-radius: 9999px;
-  cursor: pointer;
-  font-family: var(--font-primary);
-  font-size: 0.75rem;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  transition: all 0.3s ease;
-  animation: fadeIn 0.5s ease;
+
+.loaderContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
 }
-.skipButton:hover {
-  border-color: rgba(255, 255, 255, 0.5);
-  color: rgba(255, 255, 255, 0.8);
+
+.track {
+  width: 160px;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.12);
+  overflow: hidden;
+  position: relative;
 }
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+
+.bar {
+  height: 100%;
+  width: 0%;
+  background: rgba(220, 225, 255, 0.95);
+  box-shadow: 0 0 16px rgba(200, 215, 255, 0.6);
+  transition: width 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.counter {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  color: rgba(255, 255, 255, 0.45);
+  letter-spacing: 0.18em;
+  font-variant-numeric: tabular-nums;
 }
